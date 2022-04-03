@@ -1,0 +1,25 @@
+{
+	"name": "@elegantstack/strapi-template-blog-v4",
+	"version": "1.0.0",
+	"description": "Strapi blog template",
+	"keywords": [
+		"strapi",
+		"template",
+		"blog",
+		"gatsby"
+	],
+	"homepage": "https://github.com/ElegantStack/strapi-template-blog-v4#readme",
+	"bugs": {
+		"url": "https://github.com/ElegantStack/strapi-template-blog-v4/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ElegantStack/strapi-template-blog-v4.git"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "ElegantStack Studio",
+		"email": "elegantstack.studio@gmail.com",
+		"url": "https://themeforest.net/user/elegantstack"
+	}
+}
