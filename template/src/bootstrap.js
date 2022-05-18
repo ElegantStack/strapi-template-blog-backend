@@ -3,7 +3,6 @@
 const fs = require('fs-extra')
 const path = require('path')
 const mime = require('mime-types')
-const set = require('lodash.set')
 const { categories, authors, articles } = require('../data/data.json')
 
 async function isFirstRun() {
@@ -122,85 +121,19 @@ async function checkFileExistsBeforeUpload(files) {
 	return allFiles.length === 1 ? allFiles[0] : allFiles
 }
 
-// async function updateBlocks(blocks) {
-// 	const updatedBlocks = []
-// 	for (const block of blocks) {
-// 		if (block.__component === 'shared.media') {
-// 			const uploadedFiles = await checkFileExistsBeforeUpload([block.file])
-// 			// Copy the block to not mutate directly
-// 			const blockCopy = { ...block }
-// 			// Replace the file name on the block with the actual file
-// 			blockCopy.file = uploadedFiles
-// 			updatedBlocks.push(blockCopy)
-// 		} else if (block.__component === 'shared.slider') {
-// 			// Get files already uploaded to Strapi or upload new files
-// 			const existingAndUploadedFiles = await checkFileExistsBeforeUpload(
-// 				block.files
-// 			)
-// 			// Copy the block to not mutate directly
-// 			const blockCopy = { ...block }
-// 			// Replace the file names on the block with the actual files
-// 			blockCopy.files = existingAndUploadedFiles
-// 			// Push the updated block
-// 			updatedBlocks.push(blockCopy)
-// 		} else {
-// 			// Just push the block as is
-// 			updatedBlocks.push(block)
-// 		}
-// 	}
-
-// 	return updatedBlocks
-// }
-
 async function importArticles() {
 	for (const article of articles) {
 		const thumbnail = await checkFileExistsBeforeUpload([`${article.slug}.jpg`])
-		// const updatedBlocks = await updateBlocks(article.blocks)
 
 		await createEntry({
 			model: 'article',
 			entry: {
 				...article,
 				thumbnail,
-				// blocks: updatedBlocks,
-				// Make sure it's not a draft
-				publishedAt: Date.now(),
 			},
 		})
 	}
 }
-
-// async function importGlobal() {
-// 	const favicon = await checkFileExistsBeforeUpload(['favicon.png'])
-// 	const shareImage = await checkFileExistsBeforeUpload(['default-image.png'])
-// 	return createEntry({
-// 		model: 'global',
-// 		entry: {
-// 			...global,
-// 			favicon,
-// 			// Make sure it's not a draft
-// 			publishedAt: Date.now(),
-// 			defaultSeo: {
-// 				...global.defaultSeo,
-// 				shareImage,
-// 			},
-// 		},
-// 	})
-// }
-
-// async function importAbout() {
-// 	const updatedBlocks = await updateBlocks(about.blocks)
-
-// 	await createEntry({
-// 		model: 'about',
-// 		entry: {
-// 			...about,
-// 			blocks: updatedBlocks,
-// 			// Make sure it's not a draft
-// 			publishedAt: Date.now(),
-// 		},
-// 	})
-// }
 
 async function importCategories() {
 	for (const category of categories) {
@@ -218,7 +151,7 @@ async function importCategories() {
 
 async function importAuthors() {
 	for (const author of authors) {
-		const thumbnail = await checkFileExistsBeforeUpload([`${author.slug}.jpg`])
+		const thumbnail = await checkFileExistsBeforeUpload([`${author.slug}.png`])
 
 		await createEntry({
 			model: 'author',
